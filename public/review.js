@@ -38,7 +38,6 @@ function resetReview() {
   reviewState.finalKeys = null;
   reviewState.approved = new Set();
   reviewState.view = 'pending';
-  if(typeof resetEmailDrafts==='function')resetEmailDrafts();
 }
 
 function reviewKey(row) {
@@ -86,7 +85,56 @@ function getUrgency(expirationDateStr) {
  * Tự động tạo bản nháp email B2B chuẩn văn phong chuyên nghiệp cá nhân hóa theo từng hồ sơ
  */
 function generateEmailDraft(row) {
-  return emailDraftFor(row).body;
+  const customer = row.customer_name || row.customer_id || 'Quý khách hàng';
+  const plan = row.plan || 'hiện tại';
+  const group = reviewGroup(row);
+  const expiration = row.expiration_date || 'sắp tới';
+  const val = row.renewal_value ? money(row.renewal_value) : 'theo biểu giá niêm yết';
+
+  if (group === 'blocked') {
+    return `Kính gửi: Ban Giám đốc & Bộ phận CNTT - ${customer},
+
+Lời đầu tiên, An Tín xin gửi lời chào trân trọng và chân thành cáo lỗi cùng Quý công ty về sự cố kỹ thuật gần đây mà Quý vị đang phản ánh với bộ phận Support (ghi nhận ${row.open_tickets || 1} ticket sự cố đang mở).
+
+Chúng tôi hiểu rằng tính ổn định của hệ thống là ưu tiên quan trọng nhất đối với Quý vị. Hiện đội ngũ Kỹ thuật An Tín đang tập trung giải quyết triệt để sự cố này trước khi trao đổi về thủ tục gia hạn hợp đồng (dự kiến hết hạn vào ngày ${expiration}).
+
+Chúng tôi sẽ cập nhật ngay khi sự cố được nghiệm thu xong. Xin vui lòng liên hệ hotline kỹ thuật 24/7 nếu Quý vị cần hỗ trợ gấp.
+
+Trân trọng,
+Bộ phận Hỗ trợ Kỹ thuật & CSKH An Tín`;
+  }
+
+  if (group === 'upgrade') {
+    return `Kính gửi: Ban Giám đốc & Bộ phận Phụ trách - ${customer},
+
+An Tín xin chân thành cảm ơn Quý công ty đã tin tưởng đồng hành cùng giải pháp của chúng tôi trong suốt thời gian qua.
+
+Hệ thống đối soát định kỳ ghi nhận gói dịch vụ ${plan} của Quý công ty đang đạt hiệu suất sử dụng rất cao (${row.adoption_rate ?? 95}% công suất) và dịch vụ duy trì ổn định tuyệt đối (0 ticket lỗi). Hợp đồng của Quý công ty sẽ đến hạn vào ngày ${expiration}.
+
+Nhằm hỗ trợ Quý công ty mở rộng quy mô kinh doanh không bị gián đoạn và tối ưu ngân sách, An Tín trân trọng đề xuất phương án nâng cấp gói với chính sách đặc quyền tái ký sớm:
+• Dự toán giá trị: ${val}
+• Ưu đãi chiết khấu trực tiếp 15% năm đầu khi xác nhận trước hạn 30 ngày.
+• Giữ nguyên thời hạn và tự động cộng dồn toàn bộ ngày sử dụng còn lại.
+
+Chuyên viên CSKH An Tín sẽ liên hệ trong ngày để tư vấn chi tiết và gửi phụ lục hợp đồng.
+
+Trân trọng,
+Đội ngũ Vận hành Gia hạn Hợp đồng An Tín`;
+  }
+
+  return `Kính gửi: Quý đại diện Ban Phụ trách - ${customer},
+
+An Tín xin gửi lời chào trân trọng và cảm ơn Quý công ty đã tin dùng giải pháp dịch vụ của chúng tôi.
+
+Hệ thống ghi nhận hợp đồng dịch vụ gói ${plan} của Quý công ty sẽ đến hạn vào ngày ${expiration}. Nhằm bảo đảm các luồng công việc vận hành liên tục, An Tín trân trọng thông báo chuẩn bị thủ tục gia hạn kỳ tiếp theo:
+• Gói dịch vụ: ${plan}
+• Giá trị gia hạn dự kiến: ${val}
+• Đi kèm chính sách hỗ trợ kỹ thuật và sao lưu dữ liệu tiêu chuẩn.
+
+Kính mời Quý công ty phản hồi email này để chuyên viên phụ trách hỗ trợ hoàn tất thủ tục nhanh chóng nhất.
+
+Trân trọng,
+Phòng Dịch vụ Khách hàng An Tín`;
 }
 
 function reviewBaseRows() {
@@ -170,7 +218,7 @@ function reviewTable() {
       <td class="proposal-cell">
         <div style="display:flex; align-items:center; justify-content:space-between; gap:6px; flex-wrap:wrap;">
           <span class="proposal-badge ${group}"><b>${config.icon}</b>${config.label}</span>
-          <button type="button" class="btn-copy-email" data-copy-email-key="${esc(reviewKey(row))}" title="Xem trước, chỉnh sửa hoặc yêu cầu Agent viết lại email">✉ Xem email</button>
+          <button type="button" class="btn-copy-email" data-copy-email-key="${esc(reviewKey(row))}" title="Sao chép nhanh email nháp do AI soạn sẵn">📋 Chép email</button>
         </div>
         <details class="proposal-evidence">
           <summary>Xem căn cứ & bản nháp Email</summary>
@@ -179,9 +227,9 @@ function reviewTable() {
           <div class="row-email-preview">
             <div class="row-email-header">
               <strong>✉ Bản nháp Email B2B (AI soạn sẵn):</strong>
-              <button type="button" class="btn-copy-email" data-copy-email-key="${esc(reviewKey(row))}">✉ Xem & chỉnh email</button>
+              <button type="button" class="btn-copy-email" data-copy-email-key="${esc(reviewKey(row))}">📋 Sao chép Email</button>
             </div>
-            <pre class="row-email-text" data-email-preview-key="${esc(reviewKey(row))}">${esc(emailDraft)}</pre>
+            <pre class="row-email-text">${esc(emailDraft)}</pre>
           </div>
         </details>
       </td>
@@ -355,52 +403,32 @@ function refreshReviewSelection() {
   syncReviewActions();
 }
 
-function refreshReviewTable({resetScroll=false}={}) {
+function refreshReviewTable() {
   if (![3, 4].includes(state.step)) return;
-  const stageScroll=stageEl.scrollTop;
-  const previousTable=document.querySelector('#reviewTableHost .review-table-wrap');
-  const tableTop=resetScroll?0:previousTable?.scrollTop || 0,tableLeft=previousTable?.scrollLeft || 0;
   document.querySelector('#reviewTableHost').innerHTML = reviewTable();
   document.querySelector('#reviewSelectionSummary').innerHTML = reviewSelectionSummary();
   syncReviewActions();
-  const table=document.querySelector('#reviewTableHost .review-table-wrap');
-  if(table){table.scrollTop=tableTop;table.scrollLeft=tableLeft;}
-  stageEl.scrollTop=stageScroll;
 }
 
 function refreshReviewWorkspace() {
   if (![3, 4].includes(state.step)) return;
-  const stageScroll=stageEl.scrollTop;
   document.querySelector('#reviewWorkspace').outerHTML = reviewWorkspace();
   syncReviewActions();
-  stageEl.scrollTop=stageScroll;
-}
-
-function refreshReviewFilters() {
-  // Keep the clicked control and search input mounted so focus and hover stay put.
-  document.querySelectorAll('#reviewWorkspace [data-review-filter]').forEach(button=>{
-    const active=button.dataset.reviewFilter===reviewState.filter;
-    button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));
-  });
-  document.querySelectorAll('#reviewWorkspace [data-urgency-filter]').forEach(button=>{
-    const active=button.dataset.urgencyFilter===reviewState.urgencyFilter;
-    button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active));
-  });
-  refreshReviewTable({resetScroll:true});
+  if (typeof animateWorkspaceTransition === 'function') animateWorkspaceTransition(null, null, document.querySelector('#reviewWorkspace'));
 }
 
 function setReviewFilter(group) {
   if (!['all', ...Object.keys(reviewGroups)].includes(group) || ![3, 4].includes(state.step) || state.processing) return;
   reviewState.filter = group === reviewState.filter ? 'all' : group;
   reviewState.page = 0;
-  refreshReviewFilters();
+  refreshReviewWorkspace();
 }
 
 function setUrgencyFilter(level) {
   if (!['all', 'danger', 'warning', 'safe'].includes(level) || ![3, 4].includes(state.step) || state.processing) return;
   reviewState.urgencyFilter = level;
   reviewState.page = 0;
-  refreshReviewFilters();
+  refreshReviewWorkspace();
 }
 
 function transferReviewSelection() {
@@ -483,7 +511,18 @@ stageEl.addEventListener('click', event => {
     event.preventDefault();
     const key = copyBtn.dataset.copyEmailKey;
     const row = reviewBaseRows().find(r => reviewKey(r) === key);
-    if (row) openContractEmail(key);
+    if (row) {
+      const emailText = generateEmailDraft(row);
+      const cust = row.customer_name || row.customer_id;
+      window.copyToClipboard(emailText, `✓ Đã sao chép email gửi ${cust}!`);
+      copyBtn.classList.add('copied');
+      const prevHtml = copyBtn.innerHTML;
+      copyBtn.innerHTML = '✓ Đã chép!';
+      setTimeout(() => {
+        copyBtn.classList.remove('copied');
+        copyBtn.innerHTML = prevHtml;
+      }, 2000);
+    }
     return;
   }
 
@@ -518,16 +557,15 @@ stageEl.addEventListener('click', event => {
     reviewState.filter = 'all';
     reviewState.urgencyFilter = 'all';
     reviewState.page = 0;
-    document.querySelector('#reviewSearch').value='';
-    refreshReviewFilters();
+    refreshReviewWorkspace();
   } else if (button.hasAttribute('data-review-page')) {
     reviewState.page = Number(button.dataset.reviewPage);
-    refreshReviewTable({resetScroll:true});
+    refreshReviewTable();
   } else if (button.dataset.reviewBulk === 'filtered') {
     selectReviewRows(reviewFilteredRows(), true);
-    refreshReviewSelection();
+    refreshReviewTable();
   } else {
     reviewState.selected.clear();
-    refreshReviewSelection();
+    refreshReviewTable();
   }
 });

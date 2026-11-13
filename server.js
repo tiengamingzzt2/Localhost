@@ -423,15 +423,16 @@ function analyze(body) {
 }
 
 async function handleRequest(req, res) {
-  if (req.method === 'POST' && req.url === '/api/repair') {
+  const url = new URL(req.url, 'http://localhost');
+  const pathname = decodeURIComponent(url.pathname);
+  if (req.method === 'POST' && (pathname === '/api/repair' || pathname.endsWith('/api/repair'))) {
     try { return send(res, 200, prepareRepair(await readBody(req))); }
     catch (e) { return send(res, 400, { message: e.message }); }
   }
-  if (req.method === 'POST' && req.url === '/api/run') {
+  if (req.method === 'POST' && (pathname === '/api/run' || pathname.endsWith('/api/run'))) {
     try { const body = await readBody(req); return send(res, 200, analyze(body)); }
     catch (e) { return send(res, 400, { blocked: true, errorCount:1, errors: [{ file: 'Tệp tải lên', row: '-', field: 'Định dạng', message: e.message }],remediation:{action:'reload',reason:'Không đọc được cấu trúc file. Hãy kiểm tra định dạng, hàng tiêu đề và nội dung file gốc rồi tải lại.',issues:[]}, log: [] }); }
   }
-  const pathname = decodeURIComponent(new URL(req.url, 'http://localhost').pathname);
   const requested = pathname === '/' ? '/index.html' : pathname;
   const file = path.join(ROOT, 'public', requested.replace(/^\/+/, ''));
   if (!file.startsWith(path.join(ROOT, 'public'))) return send(res, 403, 'Forbidden', 'text/plain');
