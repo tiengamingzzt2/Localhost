@@ -444,4 +444,6 @@ if (require.main === module) {
   server.listen(PORT, '127.0.0.1', () => console.log(`Renewal Agent running at http://localhost:${PORT}`));
 }
 
-module.exports = { server, handleRequest };
+module.exports = handleRequest;
+module.exports.handleRequest = handleRequest;
+module.exports.server = server;
