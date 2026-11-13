@@ -1,0 +1,19 @@
+{
+  "users": [
+    {
+      "id": "f2dfb694-4e9c-4d8d-b484-ddffcd680e04",
+      "name": "Bạn học",
+      "email": "demo-7f86103f@local.demo",
+      "target": 650,
+      "demo": true
+    }
+  ],
+  "sessions": [
+    {
+      "token": "dc1dd317441341b8480ce7887190313932d8135a99ee8bd1dbd52699d57e7ce8",
+      "userId": "f2dfb694-4e9c-4d8d-b484-ddffcd680e04",
+      "expiresAt": 1795156231135
+    }
+  ],
+  "attempts": []
+}

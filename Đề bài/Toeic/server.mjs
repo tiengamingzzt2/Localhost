@@ -18,7 +18,7 @@ function examFor(a){return exams.find(e=>e.id===a.examId);}
 function qsFor(a){return (a.questionIds||examFor(a).questionIds).map(id=>questions.find(q=>q.id===id));}
 function closeAttempt(a,reason='manual'){
  if(a.status==='completed')return;
- a.status='completed';a.completedAt=Date.now();a.reason=reason;
+ a.status='completed';a.completedAt=reason==='timeout'?a.deadline:Date.now();a.reason=reason;
  a.reviewAt=a.completedAt+(a.mode==='practice'?0:examFor(a).releaseDelay);save();
 }
 function refresh(a){if(a.status==='active'&&a.deadline&&Date.now()>=a.deadline)closeAttempt(a,'timeout');return a;}
@@ -69,7 +69,7 @@ async function api(req,res,url){
   if(record.reset<Date.now()){record.count=0;record.reset=Date.now()+60000;}record.count++;authTries.set(key,record);
   if(record.count>20)fail('Bạn thử quá nhiều lần. Vui lòng đợi một phút.',429);
   const b=await body(req);const u=db.users.find(u=>u.email===String(b.email||'').trim().toLowerCase());
-  if(typeof b.password!=='string'||b.password.length>128||!u||!timingSafeEqual(passwordHash(b.password,u.salt),Buffer.from(u.password,'hex')))fail('Email hoặc mật khẩu chưa đúng.',401);
+  if(typeof b.password!=='string'||b.password.length>128||!u?.password||!timingSafeEqual(passwordHash(b.password,u.salt),Buffer.from(u.password,'hex')))fail('Email hoặc mật khẩu chưa đúng.',401);
   return loginUser(res,u);
  }
  if(route==='/api/auth/demo'&&method==='POST'){
@@ -115,6 +115,7 @@ async function api(req,res,url){
    for(const [id,answer] of Object.entries(b.answers)){
     const q=items.find(q=>q.id===Number(id));if(!q||!Number.isInteger(answer)||answer<0||answer>=q.options.length)fail('Đáp án không hợp lệ.');
     if(a.mode==='exam'&&q.section==='listening'&&a.listeningDeadline<=Date.now()&&a.answers[id]!==answer)fail('Phần Listening đã kết thúc. Đáp án mới chưa được chấp nhận.',409);
+    if(a.mode==='exam'&&q.section==='reading'&&a.listeningDeadline&&Date.now()<a.listeningDeadline)fail('Phần Reading chưa bắt đầu.',409);
    }
    if(!Array.isArray(b.flags)||b.flags.some(id=>!items.some(q=>q.id===id)))fail('Câu đánh dấu không hợp lệ.');
    Object.assign(a.answers,b.answers);a.flags=[...new Set(b.flags)];a.savedAt=Date.now();save();return safeAttempt(a);
