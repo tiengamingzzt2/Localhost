@@ -1,0 +1,15 @@
+{
+  "name": "an-tin-renewal-agent",
+  "version": "1.0.0",
+  "private": true,
+  "description": "An Tín - Hệ thống AI Agent Tự Động Hóa Gia Hạn Hợp Đồng B2B",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build": "node -e \"console.log('Build completed successfully')\""
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
+

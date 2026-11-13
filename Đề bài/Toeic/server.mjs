@@ -6,11 +6,30 @@ import {randomBytes,scryptSync,timingSafeEqual,randomUUID} from 'node:crypto';
 import {exams,examQuestions,hydratedQuestion,questions} from './questions.mjs';
 
 const root=path.dirname(fileURLToPath(import.meta.url));
-const dataDir=process.env.DATA_DIR||path.join(root,'data');
-mkdirSync(dataDir,{recursive:true});
-const dbFile=path.join(dataDir,'database.json');
-const db=existsSync(dbFile)?JSON.parse(readFileSync(dbFile,'utf8')):{users:[],sessions:[],attempts:[]};
-function save(){writeFileSync(dbFile+'.tmp',JSON.stringify(db,null,2));renameSync(dbFile+'.tmp',dbFile);}
+const defaultDataDir = process.env.VERCEL ? path.join('/tmp', 'toeic-data') : path.join(root, 'data');
+const dataDir = process.env.DATA_DIR || defaultDataDir;
+try { mkdirSync(dataDir, { recursive: true }); } catch {}
+const dbFile = path.join(dataDir, 'database.json');
+const seedFile = path.join(root, 'data', 'database.json');
+
+function initDb() {
+  if (existsSync(dbFile)) {
+    try { return JSON.parse(readFileSync(dbFile, 'utf8')); } catch {}
+  }
+  if (existsSync(seedFile)) {
+    try { return JSON.parse(readFileSync(seedFile, 'utf8')); } catch {}
+  }
+  return { users: [], sessions: [], attempts: [] };
+}
+const db = initDb();
+function save() {
+  try {
+    writeFileSync(dbFile + '.tmp', JSON.stringify(db, null, 2));
+    renameSync(dbFile + '.tmp', dbFile);
+  } catch (err) {
+    console.error('Không thể ghi file database:', err.message);
+  }
+}
 function fail(message,status=400){throw Object.assign(new Error(message),{status});}
 function publicUser(u){return {id:u.id,name:u.name,email:u.email,target:u.target||650};}
 function passwordHash(password,salt){return scryptSync(password,salt,64);}
@@ -41,6 +60,10 @@ function safeAttempt(a,withQuestions=true){
  return result;
 }
 async function body(req){
+ if(req.body!==undefined&&req.body!==null){
+  if(typeof req.body==='object')return req.body;
+  if(typeof req.body==='string'){try{return JSON.parse(req.body);}catch{fail('Dữ liệu không hợp lệ.');}}
+ }
  let raw='';for await(const chunk of req){raw+=chunk;if(Buffer.byteLength(raw)>65536)fail('Dữ liệu gửi lên quá lớn.',413);}
  try{return raw?JSON.parse(raw):{};}catch{fail('Dữ liệu không hợp lệ.');}
 }
@@ -54,7 +77,12 @@ function loginUser(res,user){
 const authTries=new Map();
 async function api(req,res,url){
  const method=req.method;const route=url.pathname;
- if(method!=='GET'&&req.headers.origin&&req.headers.origin!==`http://${req.headers.host}`)fail('Nguồn yêu cầu không hợp lệ.',403);
+ if(method!=='GET'&&req.headers.origin){
+  try{
+   const originHost=new URL(req.headers.origin).host;
+   if(originHost!==req.headers.host)fail('Nguồn yêu cầu không hợp lệ.',403);
+  }catch{fail('Nguồn yêu cầu không hợp lệ.',403);}
+ }
  if(route==='/api/auth/register'&&method==='POST'){
   const b=await body(req);const email=String(b.email||'').trim().toLowerCase();const name=String(b.name||'').trim();
   if(!name||name.length>60)fail('Tên phải có từ 1 đến 60 ký tự.');
@@ -125,22 +153,43 @@ async function api(req,res,url){
  fail('Không tìm thấy chức năng.',404);
 }
 const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.svg':'image/svg+xml'};
-export const server=http.createServer(async(req,res)=>{
- res.setHeader('X-Content-Type-Options','nosniff');res.setHeader('Referrer-Policy','same-origin');
- try{
-  const url=new URL(req.url,'http://localhost');
-  if(url.pathname.startsWith('/api/')){
-   res.setHeader('Content-Type','application/json; charset=utf-8');res.setHeader('Cache-Control','no-store');
-   const result=await api(req,res,url);res.end(JSON.stringify(result));return;
+export async function handleRequest(req, res) {
+ res.setHeader('X-Content-Type-Options', 'nosniff');
+ res.setHeader('Referrer-Policy', 'same-origin');
+ try {
+  const host = req.headers.host || 'localhost';
+  const proto = req.headers['x-forwarded-proto'] || (req.socket?.encrypted ? 'https' : 'http');
+  const url = new URL(req.url, `${proto}://${host}`);
+  if (url.pathname.startsWith('/api/')) {
+   res.setHeader('Content-Type', 'application/json; charset=utf-8');
+   res.setHeader('Cache-Control', 'no-store');
+   const result = await api(req, res, url);
+   res.end(JSON.stringify(result));
+   return;
   }
-  if(req.method!=='GET'&&req.method!=='HEAD')fail('Phương thức không hợp lệ.',405);
-  const relative=url.pathname==='/'?'index.html':decodeURIComponent(url.pathname).slice(1);
-  const file=path.resolve(root,'public',relative);const publicRoot=path.join(root,'public')+path.sep;
-  if(!file.startsWith(publicRoot)||!types[path.extname(file)]||!existsSync(file))fail('Không tìm thấy trang.',404);
-  res.setHeader('Content-Type',types[path.extname(file)]);res.setHeader('Cache-Control','no-cache');res.end(req.method==='HEAD'?undefined:readFileSync(file));
- }catch(err){res.statusCode=err.status||500;res.setHeader('Content-Type','application/json; charset=utf-8');res.end(JSON.stringify({error:err.status?err.message:'Có lỗi hệ thống. Vui lòng thử lại.'}));if(!err.status)console.error(err);}
-});
-if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){
- const port=Number(process.env.PORT||3000);server.listen(port,'127.0.0.1',()=>console.log(`TOEIC Studio đang chạy tại http://localhost:${server.address().port}`));
- server.on('error',err=>{console.error(err.code==='EADDRINUSE'?`Cổng ${port} đang được sử dụng. Đổi PORT rồi chạy lại.`:err.message);process.exit(1);});
+  if (req.method !== 'GET' && req.method !== 'HEAD') fail('Phương thức không hợp lệ.', 405);
+  const relative = url.pathname === '/' ? 'index.html' : decodeURIComponent(url.pathname).slice(1);
+  const file = path.resolve(root, 'public', relative);
+  const publicRoot = path.join(root, 'public') + path.sep;
+  if (!file.startsWith(publicRoot) || !types[path.extname(file)] || !existsSync(file)) fail('Không tìm thấy trang.', 404);
+  res.setHeader('Content-Type', types[path.extname(file)]);
+  res.setHeader('Cache-Control', 'no-cache');
+  res.end(req.method === 'HEAD' ? undefined : readFileSync(file));
+ } catch (err) {
+  res.statusCode = err.status || 500;
+  res.setHeader('Content-Type', 'application/json; charset=utf-8');
+  res.end(JSON.stringify({ error: err.status ? err.message : 'Có lỗi hệ thống. Vui lòng thử lại.' }));
+  if (!err.status) console.error(err);
+ }
+}
+
+export const server = http.createServer(handleRequest);
+
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
+ const port = Number(process.env.PORT || 3000);
+ server.listen(port, '127.0.0.1', () => console.log(`TOEIC Studio đang chạy tại http://localhost:${server.address().port}`));
+ server.on('error', err => {
+  console.error(err.code === 'EADDRINUSE' ? `Cổng ${port} đang được sử dụng. Đổi PORT rồi chạy lại.` : err.message);
+  process.exit(1);
+ });
 }

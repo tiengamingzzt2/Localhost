@@ -14,6 +14,12 @@ function send(res, status, body, type = 'application/json; charset=utf-8') {
 }
 
 function readBody(req) {
+  if (req.body !== undefined && req.body !== null) {
+    if (typeof req.body === 'object') return Promise.resolve(req.body);
+    if (typeof req.body === 'string') {
+      try { return Promise.resolve(JSON.parse(req.body)); } catch { return Promise.reject(new Error('Dữ liệu gửi lên không hợp lệ.')); }
+    }
+  }
   return new Promise((resolve, reject) => {
     const chunks = [];
     let size = 0;
@@ -416,7 +422,7 @@ function analyze(body) {
   }, log };
 }
 
-const server = http.createServer(async (req, res) => {
+async function handleRequest(req, res) {
   if (req.method === 'POST' && req.url === '/api/repair') {
     try { return send(res, 200, prepareRepair(await readBody(req))); }
     catch (e) { return send(res, 400, { message: e.message }); }
@@ -430,6 +436,12 @@ const server = http.createServer(async (req, res) => {
   const file = path.join(ROOT, 'public', requested.replace(/^\/+/, ''));
   if (!file.startsWith(path.join(ROOT, 'public'))) return send(res, 403, 'Forbidden', 'text/plain');
   fs.readFile(file, (err, data) => err ? send(res, 404, 'Not found', 'text/plain') : send(res, 200, data, MIME[path.extname(file)] || 'application/octet-stream'));
-});
+}
 
-server.listen(PORT, '127.0.0.1', () => console.log(`Renewal Agent running at http://localhost:${PORT}`));
+const server = http.createServer(handleRequest);
+
+if (require.main === module) {
+  server.listen(PORT, '127.0.0.1', () => console.log(`Renewal Agent running at http://localhost:${PORT}`));
+}
+
+module.exports = { server, handleRequest };
