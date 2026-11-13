@@ -1,0 +1,92 @@
+/* Keep supporting copy readable without scaling the dashboard or its artwork. */
+.workspace-shell {
+  --text-detail: 11px;
+  --text-support: 12px;
+  --text-description: 13px;
+}
+
+.workspace-sidebar .step-navigation-hint,
+.workspace-sidebar .step small,
+.workspace-sidebar .sidebar-section-title,
+.workspace-sidebar .sidebar-link > b,
+.workspace-sidebar .theme-copy small {
+  font-size: var(--text-detail);
+  line-height: 1.65;
+}
+
+.workspace-sidebar .step b,
+.workspace-sidebar .main-nav .nav-item,
+.workspace-sidebar .sidebar-link,
+.workspace-sidebar .side-filter,
+.workspace-sidebar .theme-toggle .theme-copy {
+  font-size: var(--text-support);
+}
+
+.workspace-shell :is(.stage-title p, .unified-upload p) {
+  font-size: var(--text-description);
+  line-height: 1.7;
+}
+
+.workspace-shell :is(.microcopy, .upload-format-note, .upload-process,
+  .upload-agent-status, .queued-file small, .feedback-wrap small,
+  .review-selection-bar small, .approval-queues > span, .approved-downloads small,
+  .stat-content p, .metric em, .top-groups-hint, .group-desc,
+  .chart-note, .chart-presets > span, .chart-values > summary) {
+  font-size: var(--text-detail);
+  line-height: 1.65;
+}
+
+.workspace-shell :is(.review-search-label, .review-context,
+  .review-selection-bar strong, .review-toolbar .btn, .review-bulk-actions .btn,
+  .clean-file-toolbar label, .clean-file-toolbar .btn, .clean-report span,
+  .table-pagination, .table-pagination .btn, .approval-queue, .urgency-filter-btn,
+  .metric span, .group-name, .chart-controls label, .chart-builder-actions .btn,
+  .chart-presets .btn, .chart-card-actions .btn) {
+  font-size: var(--text-support);
+}
+
+.workspace-shell .review-search-label input {
+  font-size: var(--text-description);
+}
+
+.workspace-shell .top-group-bottom {
+  flex-wrap: wrap;
+}
+
+.workspace-shell .group-desc {
+  white-space: normal;
+}
+
+.workspace-shell :is(.data-table, .data-table th, .review-table,
+  .review-table th, .review-table .review-key-cell strong) {
+  font-size: var(--text-support);
+}
+
+.workspace-shell :is(.review-key-cell small, .review-dates small,
+  .review-missing, .proposal-evidence summary, .urgency-badge) {
+  font-size: var(--text-detail);
+}
+
+:root[data-theme="dark"] .workspace-shell .review-table .proposal-evidence summary {
+  font-size: var(--text-detail);
+}
+
+.input-guide-teaser p,
+.input-guide-teaser .btn,
+.input-quality-counts,
+.input-quality-report :is(p, summary, li),
+.input-quality-heading .btn,
+.input-guide-cases p,
+.input-guide-instructions p,
+.input-guide-process,
+.input-schema-table :is(.data-table, th, code, small),
+.email-dialog-footer p,
+.email-rewrite-actions small,
+.email-rewrite-options .email-price-option {
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.input-field-level {
+  font-size: 11px;
+}

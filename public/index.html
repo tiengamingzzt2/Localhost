@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#e9e8e6"><title>An Tín | Renewal Agent - Giải Pháp Gia Hạn Hợp Đồng Thông Minh</title>
+  <script src="/theme.js"></script>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/themes.css">
+  <link rel="stylesheet" href="/intro.css">
+  <link rel="stylesheet" href="/readability.css">
+</head>
+<body>
+
+  <!-- ==============================================================================
+       1. MÀN HÌNH CHỜ & GIỚI THIỆU GIẢI PHÁP (INTRO HERO SHOWCASE - PHONG CÁCH POE AI)
+       ============================================================================== -->
+  <section id="introScreen" class="intro-screen" aria-label="Màn hình chờ và giới thiệu giải pháp">
+    <div class="intro-shell">
+      <!-- Top Navigation -->
+      <header class="intro-nav">
+        <a class="brand" href="#intro" aria-label="An Tín Renewal Intelligence">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 25 15 6h7L12 25H5Z" fill="currentColor"/><path d="m21 16 6 9h-9l3-9Z" fill="currentColor"/></svg>
+          <span>An Tín<span class="brand-sub"> / Renewal Intelligence</span></span>
+        </a>
+
+        <nav class="intro-menu" aria-label="Menu giới thiệu nhanh">
+          <button type="button" class="intro-menu-link" id="introNavSkills">✦ 4 Kỹ năng AI</button>
+          <button type="button" class="intro-menu-link" id="introNavRules">🛑 Chốt chặn HITL</button>
+          <button type="button" class="intro-menu-link" id="introNavGuide">📖 Hướng dẫn</button>
+        </nav>
+
+        <div class="intro-nav-actions">
+          <button type="button" class="btn btn-light" id="introThemeToggle" title="Chuyển chế độ sáng/tối">☾ Dark mode</button>
+          <button type="button" class="btn btn-primary intro-cta-btn" id="enterWorkspaceBtn">Vào Không gian làm việc ➔</button>
+        </div>
+      </header>
+
+      <!-- Hero Section (2-Cột: Bên trái giới thiệu, Bên phải 3D Layered Cards) -->
+      <div class="intro-hero">
+        <!-- Cột trái: Văn bản & Nút hành động -->
+        <div class="intro-left">
+          <div class="intro-badge">
+            <span class="badge-dot"></span>
+            <span>AI301 ĐỀ DỰ ÁN 03 · CÔNG NGHỆ THẨM ĐỊNH TỰ ĐỘNG</span>
+          </div>
+
+          <h1 class="intro-title">
+            Đột phá tự động hóa<br>
+            <span class="intro-title-accent">Gia hạn hợp đồng B2B</span>
+          </h1>
+
+          <p class="intro-desc">
+            Hệ thống AI Agent 4 cấp độ kết hợp tầng chuẩn hóa <b>Canonical Staging Layer</b>, tự động xử lý hơn 120 hợp đồng mỗi tháng. Chủ động nhận diện cơ hội tăng gói (Upsell), thiết lập chốt chặn tuyệt đối khi khách hàng còn sự cố kỹ thuật và bảo toàn chính xác từng đồng doanh thu.
+          </p>
+
+          <div class="intro-actions">
+            <button type="button" class="btn btn-primary btn-hero-primary" id="heroStartBtn">
+              <span>🚀 Bắt đầu làm việc ngay</span>
+            </button>
+            <button type="button" class="btn btn-light btn-hero-secondary" id="heroDemoBtn">
+              <span>✦ Nạp dữ liệu mẫu 100 KH</span>
+            </button>
+          </div>
+
+          <!-- Dải số liệu / Bảo chứng công nghệ (Click để xem chi tiết) -->
+          <div class="intro-proof-bar">
+            <div class="proof-item" id="proofContracts" title="Click để xem 4 Kỹ năng xử lý">
+              <span class="proof-icon">⚡</span>
+              <b>120+ HĐ/tháng</b>
+              <small>Tự động hóa toàn diện ↗</small>
+            </div>
+            <div class="proof-item" id="proofHitl" title="Click để xem Chốt chặn HITL">
+              <span class="proof-icon">🛑</span>
+              <b>Chốt chặn HITL</b>
+              <small>Khóa chào bán khi lỗi ↗</small>
+            </div>
+            <div class="proof-item" id="proofStaging" title="Click để xem Tầng Canonical Staging">
+              <span class="proof-icon">🎯</span>
+              <b>Canonical Staging</b>
+              <small>Lọc sạch schema đa nguồn ↗</small>
+            </div>
+            <div class="proof-item" id="proofRevenue" title="Click để xem Chi tiết Doanh thu 100 KH">
+              <span class="proof-icon">💰</span>
+              <b>2.51 Tỷ đồng</b>
+              <small>Doanh thu an toàn xác thực ↗</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cột phải: 3D Layered Perspective Cards (Floating animations) -->
+        <div class="intro-right">
+          <div class="cards-canvas">
+            <!-- Quầng sáng hiệu ứng nền Ambient Glow -->
+            <div class="ambient-glow glow-1"></div>
+            <div class="ambient-glow glow-2"></div>
+
+            <!-- Card 1: Thẻ hồ sơ thẩm định khách hàng tiềm năng tăng gói -->
+            <div class="showcase-card card-primary" id="cardProfile" title="Click để xem Chi tiết Hồ sơ & Bản nháp Email (KH001)">
+              <div class="card-header">
+                <div class="card-user">
+                  <div class="avatar-badge">AT</div>
+                  <div>
+                    <strong>Công ty CP Công nghệ Tiên Phong</strong>
+                    <small>KH001 · Gói hiện tại: Basic (15M)</small>
+                  </div>
+                </div>
+                <span class="tag-status tag-upsell">🔥 UPSELL PRO (35M)</span>
+              </div>
+
+              <div class="card-body-metrics">
+                <div class="card-metric-box">
+                  <span>Mức dùng thực tế</span>
+                  <strong>95%</strong>
+                  <div class="metric-bar"><i style="width: 95%"></i></div>
+                  <small>23 / 20 tài khoản</small>
+                </div>
+                <div class="card-metric-box">
+                  <span>Trạng thái sự cố</span>
+                  <strong class="text-safe">0 Ticket</strong>
+                  <div class="metric-bar"><i style="width: 100%; background: #526640"></i></div>
+                  <small>Đã nghiệm thu xong</small>
+                </div>
+                <div class="card-metric-box">
+                  <span>Thời hạn gia hạn</span>
+                  <strong>24 Ngày</strong>
+                  <div class="metric-bar"><i style="width: 70%; background: #b48a48"></i></div>
+                  <small>Trước hạn 45 ngày</small>
+                </div>
+              </div>
+
+              <div class="card-footer-action">
+                <span class="footer-tag">✦ Đạt chuẩn nâng gói</span>
+                <span class="footer-benefit">Ưu đãi 15% năm đầu khi tái ký sớm ↗</span>
+              </div>
+            </div>
+
+            <!-- Card 2: Thẻ Chốt chặn Sự cố Kỹ thuật (Guardrail Checkpoint) -->
+            <div class="showcase-card card-secondary" id="cardGuardrail" title="Click để xem Quyết định Chặn Bán & Kế hoạch (KH036)">
+              <div class="guardrail-badge">
+                <span class="guard-icon">🛑</span>
+                <b>CHỐT CHẶN BẢO VỆ (HITL)</b>
+              </div>
+              <div class="guardrail-content">
+                <strong>Công ty Thiết bị Y khoa Cửu Long (KH036)</strong>
+                <p>Khách hàng có 1 sự cố mở: <code>INC-2026-1036 (Lỗi xuất HĐ)</code></p>
+                <div class="guard-decision">
+                  <span>Quyết định AI Agent:</span>
+                  <b class="text-danger">CHẶN CHÀO TĂNG GÓI · ƯU TIÊN SỬA LỖI ↗</b>
+                </div>
+              </div>
+            </div>
+
+            <!-- Card 3: Thẻ Doanh thu an toàn được bảo đảm -->
+            <div class="showcase-card card-tertiary" id="cardRevenue" title="Click để xem Bảng Phân Bổ Doanh Thu 100 Khách Hàng">
+              <div class="revenue-icon">💰</div>
+              <div>
+                <small>Dự báo doanh thu an toàn kỳ này</small>
+                <strong>2,517,500,000 VNĐ ↗</strong>
+                <span>(Đã loại trừ 15 hợp đồng lỗi & 10 hợp đồng thiếu log)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==============================================================================
+       2. KHÔNG GIAN LÀM VIỆC CHÍNH (MAIN WORKSPACE SHELL)
+       ============================================================================== -->
+  <div class="shell workspace-shell" id="workspaceShell">
+    <aside class="workspace-sidebar" id="workspaceSidebar" aria-label="Menu làm việc">
+      <div class="sidebar-brand-row">
+        <a class="brand" href="#intro" title="Bấm để xem màn hình giới thiệu" aria-label="An Tín Renewal">
+          <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><path d="M5 25 15 6h7L12 25H5Z" fill="currentColor"/><path d="m21 16 6 9h-9l3-9Z" fill="currentColor"/></svg>
+          <span>An Tín<span class="brand-sub"> / Renewal</span></span>
+        </a>
+        <button id="closeSidebar" class="sidebar-close" aria-label="Đóng menu">✕</button>
+      </div>
+
+      <div class="sidebar-section-title">QUY TRÌNH GIA HẠN</div>
+      <nav class="steps" id="steps" aria-label="Chuyển bước quy trình">
+        <button type="button" class="step active" data-step="1" aria-current="step" aria-describedby="stepNavigationHint"><span class="step-num">01</span><span><b>Nạp dữ liệu</b><small>Tải & nhận diện tệp</small><span class="step-count" id="stepCount1">—</span></span></button>
+        <button type="button" class="step hitl-step" data-step="2" disabled aria-describedby="stepNavigationHint"><span class="step-num">02</span><span><b>Duyệt dữ liệu <small class="hitl-pill" title="Chốt chặn con người kiểm tra dữ liệu">HITL</small></b><small>Kiểm tra bản làm sạch</small><span class="step-count" id="stepCount2">—</span></span></button>
+        <button type="button" class="step" data-step="3" disabled aria-describedby="stepNavigationHint"><span class="step-num">03</span><span><b>Phân tích</b><small>Đề xuất & chọn hồ sơ</small><span class="step-count" id="stepCount3">—</span></span></button>
+        <button type="button" class="step hitl-step" data-step="4" disabled aria-describedby="stepNavigationHint"><span class="step-num">04</span><span><b>Duyệt kết quả <small class="hitl-pill" title="Chốt chặn con người phê duyệt">HITL</small></b><small>Phê duyệt & xuất file</small><span class="step-count" id="stepCount4">—</span></span></button>
+      </nav>
+      <p id="stepNavigationHint" class="step-navigation-hint" role="status">Bấm vào bước đã mở để làm việc.</p>
+
+      <section id="sidebarFilters" class="sidebar-filter-section" hidden aria-label="Lọc nhóm đề xuất"></section>
+
+      <div class="sidebar-section-title">CÔNG CỤ</div>
+      <nav class="main-nav" aria-label="Tiện ích làm việc">
+        <a class="nav-item active" href="#workflow"><span>▦</span> Không gian làm việc</a>
+        <button class="sidebar-link" id="sidebarCharts"><span>◷</span> Dashboard / Biểu đồ</button>
+        <button class="sidebar-link" id="sidebarApproved"><span>✓</span> Hồ sơ đã duyệt <b id="sidebarApprovedCount">0</b></button>
+        <button class="sidebar-link" id="sidebarTools"><span>⚙</span> Phản hồi / tham số</button>
+        <button class="sidebar-link" id="sidebarOverview" aria-controls="overviewPanel" aria-expanded="true"><span>◫</span> Ẩn thống kê</button>
+        <a class="nav-item" href="#audit"><span>◷</span> Nhật ký Agent</a>
+        <button type="button" class="sidebar-link theme-toggle" id="themeToggle" role="switch" aria-label="Chế độ tối" aria-checked="false"><span class="theme-icon" aria-hidden="true">☾</span><span class="theme-copy">Dark mode<small id="themeStatus" aria-hidden="true">Đang tắt</small></span><span class="theme-switch" aria-hidden="true"><i></i></span></button>
+      </nav>
+
+      <div class="sidebar-bottom-area">
+        <button id="sidebarPrimary" class="btn btn-primary">Chọn tệp</button>
+        <button id="demoBtn" class="btn btn-light">✦ Dùng dữ liệu mẫu</button>
+        <button id="aboutBtn" class="sidebar-about">Hướng dẫn sử dụng ↗</button>
+        <span class="sidebar-local"><i></i> Xử lý tại localhost</span>
+      </div>
+    </aside>
+
+    <main class="main" id="workflow">
+      <header class="topbar">
+        <div class="workspace-top-title">
+          <button id="toggleSidebar" class="sidebar-menu-button" aria-label="Mở menu làm việc" aria-controls="workspaceSidebar" aria-expanded="false">☰</button>
+          <div>
+            <h1>Không gian làm việc</h1>
+            <p id="currentStageLabel">01 / Nạp dữ liệu</p>
+          </div>
+        </div>
+        <div class="top-actions">
+          <a href="#intro" class="btn btn-sm btn-light" id="topNavIntroBtn" title="Quay lại màn hình giới thiệu giải pháp" style="display:inline-flex; align-items:center; gap:5px; text-decoration:none; font-size:11px; padding:6px 11px; border-radius:9px; font-weight:600;"><span>✦ Giới thiệu giải pháp</span></a>
+          <span class="local-pill"><i></i> Local workspace</span>
+          <span class="avatar" title="Nhóm vận hành An Tín">AT</span>
+        </div>
+      </header>
+
+      <details class="overview-panel" id="overviewPanel" open>
+        <summary>Thống kê phiên làm việc <span>Thu gọn / mở rộng</span></summary>
+        <section class="overview-grid" aria-label="Thống kê theo bước đang xem">
+          <article class="overview-card"><div class="card-top"><h2 id="overviewTotalLabel">Hồ sơ trong phiên</h2></div><div class="stat-content"><div><strong id="overviewTotal">—</strong><p id="overviewTotalNote">Bắt đầu bằng cách nạp dữ liệu</p></div></div></article>
+          <article class="overview-card"><div class="card-top"><h2 id="overviewReviewLabel">Cần xác minh</h2></div><div class="stat-content"><div><strong id="overviewReview">—</strong><p id="overviewReviewNote">Chưa có kết quả kiểm tra</p></div></div></article>
+          <article class="overview-card value-card"><div class="card-top"><h2 id="overviewValueLabel">Giá trị gia hạn có căn cứ</h2></div><div class="stat-content"><div><strong id="overviewValue">—</strong><p id="overviewValueNote">Hiển thị sau bước phân tích</p></div></div><div class="value-track" id="overviewProgress" role="progressbar" aria-label="Tiến độ duyệt hồ sơ toàn phiên" aria-valuemin="0" aria-valuemax="1" aria-valuenow="0"><span id="valueProgress"></span></div><p id="valueProgressLabel" class="progress-caption">Chưa có kết quả phân tích</p></article>
+        </section>
+      </details>
+
+      <section class="workspace-heading">
+        <h2 id="workspaceTitle">Quy trình gia hạn</h2>
+        <span class="workspace-status"><i></i><span id="workspaceStatus">Sẵn sàng nhận dữ liệu</span></span>
+      </section>
+
+      <section class="workflow-card" aria-label="Nội dung công việc">
+        <div id="stage" class="stage"></div>
+      </section>
+
+      <footer>
+        <span>AN TÍN / RENEWAL INTELLIGENCE</span>
+        <span>Dữ liệu xử lý an toàn tại localhost</span>
+      </footer>
+    </main>
+  </div>
+
+  <div id="sidebarBackdrop" class="sidebar-backdrop" hidden></div>
+  <dialog id="toolsDialog" class="tools-dialog" aria-labelledby="toolsDialogTitle"><div class="repair-dialog-header"><div><div class="eyebrow">CÔNG CỤ THEO BƯỚC</div><h2 id="toolsDialogTitle">Phản hồi và tham số</h2></div><button id="closeTools" class="btn btn-light" aria-label="Đóng công cụ">✕</button></div><div id="toolsDialogContent"></div></dialog>
+  <dialog id="aboutDialog" class="about-dialog" aria-labelledby="aboutTitle"><div class="repair-dialog-header"><h2 id="aboutTitle">Làm việc với Renewal Agent</h2><button id="closeAbout" class="btn btn-light" aria-label="Đóng hướng dẫn">✕</button></div><ol><li><b>Nạp dữ liệu:</b> chọn hoặc kéo thả CSV/XLSX; Agent tự nhận diện và làm sạch.</li><li><b>Duyệt dữ liệu:</b> xem và tải kết quả; dùng “Phản hồi / tham số” để yêu cầu xử lý lại.</li><li><b>Phân tích:</b> tìm mã khách/hợp đồng, lọc nhóm bằng menu trái và tích hồ sơ cần chuyển duyệt.</li><li><b>Duyệt kết quả:</b> duyệt hoặc xuất file. Hồ sơ hoàn tất nằm trong “Hồ sơ đã duyệt”.</li></ol><p>Bấm các bước đã mở ở menu trái để chuyển qua lại. Trạng thái duyệt và phản hồi được giữ trong phiên hiện tại.</p></dialog>
+  <dialog id="repairDialog" class="repair-dialog" aria-labelledby="repairTitle"><div class="repair-dialog-header"><div><div class="eyebrow">SỬA DỮ LIỆU ĐẦU VÀO</div><h2 id="repairTitle">Chỉnh sửa và kiểm tra lại</h2></div><button type="button" id="closeRepair" class="btn btn-light" aria-label="Đóng cửa sổ sửa dữ liệu">✕</button></div><div id="repairContent"></div></dialog>
+
+  <!-- ==============================================================================
+       3. CÁC HỘP THOẠI CHI TIẾT TƯƠNG TÁC (INTERACTIVE MODALS)
+       ============================================================================== -->
+  <!-- MODAL 1: 4 KỸ NĂNG NGHIỆP VỤ AI AGENT -->
+  <dialog id="skillsDialog" class="intro-dialog" aria-labelledby="skillsDialogTitle">
+    <div class="intro-dialog-header">
+      <h2 id="skillsDialogTitle">✦ 4 KỸ NĂNG NGHIỆP VỤ AI AGENT (AI301)</h2>
+      <button type="button" class="intro-dialog-close" data-dialog-close aria-label="Đóng">✕</button>
+    </div>
+    <div class="skill-list-grid">
+      <div class="skill-card-item">
+        <div class="skill-icon-badge">📅</div>
+        <div>
+          <strong>Skill 1: Timeline Reconciler (Đối chiếu mốc thời gian)</strong>
+          <p>Tự động tính lùi ngày liên hệ đàm phán trước 30-45 ngày từ ngày hết hạn hợp đồng. Giải quyết dứt điểm lỗi nhầm lẫn giữa ngày hết hạn và ngày cần bắt đầu liên hệ.</p>
+        </div>
+      </div>
+      <div class="skill-card-item">
+        <div class="skill-icon-badge">📊</div>
+        <div>
+          <strong>Skill 2: Health & Usage Analyzer (Phân loại sức khỏe khách hàng)</strong>
+          <p>Tính chính xác tỷ lệ Active Users / Seats mua. Nhận diện khách hàng công suất cao (>=85%) để Upsell, khách hàng có nguy cơ rời bỏ (0% dùng) để hạ gói giữ chân, và gắn cờ thiếu log (NULL) để chờ IT xác minh.</p>
+        </div>
+      </div>
+      <div class="skill-card-item">
+        <div class="skill-icon-badge">🛑</div>
+        <div>
+          <strong>Skill 3: Guardrails & Policy Engine (Chốt chặn điều kiện & Biểu giá)</strong>
+          <p>Kích hoạt Luật cứng: 100% Chặn chào gói mới khi khách hàng còn ticket sự cố mở; tự động tra cứu biểu giá Catalog niêm yết (Basic 15M, Pro 35M, Enterprise 80M) và áp mức chiết khấu chuẩn.</p>
+        </div>
+      </div>
+      <div class="skill-card-item">
+        <div class="skill-icon-badge">✉️</div>
+        <div>
+          <strong>Skill 4: Proposal & Dossier Generator (Soạn thảo hồ sơ & Email)</strong>
+          <p>Tự động xuất bảng quyết định kèm trích dẫn căn cứ dữ liệu (Evidence-based), dự báo doanh thu an toàn, lập kế hoạch phối hợp 3 bên (Sales-CSKH-Support) và soạn sẵn bản nháp email cá nhân hóa.</p>
+        </div>
+      </div>
+    </div>
+    <div class="intro-dialog-footer">
+      <button type="button" class="btn btn-light" data-dialog-close>Đóng</button>
+      <button type="button" class="btn btn-primary" id="btnSkillsToWorkspace">🚀 Vào thử nghiệm ngay</button>
+    </div>
+  </dialog>
+
+  <!-- MODAL 2: 2 CHỐT CHẶN HITL -->
+  <dialog id="hitlDialog" class="intro-dialog" aria-labelledby="hitlDialogTitle">
+    <div class="intro-dialog-header">
+      <h2 id="hitlDialogTitle">🛑 2 ĐIỂM CHỐT CHẶN CON NGƯỜI CAN THIỆP (HITL)</h2>
+      <button type="button" class="intro-dialog-close" data-dialog-close aria-label="Đóng">✕</button>
+    </div>
+    <div class="skill-list-grid">
+      <div class="skill-card-item">
+        <div class="skill-icon-badge" style="background:#fbe6e0; color:#b83c28;">1</div>
+        <div>
+          <strong style="color:#a83622;">Chốt chặn 1: Nghiệm thu Kỹ thuật Support (Trước khi báo giá)</strong>
+          <p><b>Điều kiện:</b> Khi khách hàng có ticket sự cố đang mở (<code>open_tickets &gt; 0</code>).<br>
+          <b>Hành động Agent:</b> Khóa chào bán, tự động gán nhãn <i>CHẶN BÁN - ƯU TIÊN SỬA LỖI</i>.<br>
+          <b>Người chịu trách nhiệm:</b> Trưởng nhóm Kỹ thuật Support bắt buộc phải nghiệm thu đóng ticket và xác nhận với khách trước khi phòng Kinh doanh được gửi báo giá.</p>
+        </div>
+      </div>
+      <div class="skill-card-item">
+        <div class="skill-icon-badge" style="background:#fcf1de; color:#a66c25;">2</div>
+        <div>
+          <strong style="color:#945f1e;">Chốt chặn 2: Phê duyệt Ngoại lệ Kinh doanh (Trước khi gửi thư)</strong>
+          <p><b>Điều kiện:</b> Khách hàng có tỷ lệ dùng thấp (&lt;40%), khách hàng có nguy cơ rời bỏ (0%), hoặc khách hàng bị thiếu dữ liệu log (NULL).<br>
+          <b>Hành động Agent:</b> Đề xuất chính sách Hạ gói / Giảm giá giữ chân hoặc yêu cầu IT kiểm tra cổng ghi log.<br>
+          <b>Người chịu trách nhiệm:</b> Trưởng phòng Kinh doanh xem xét phê duyệt ngoại lệ mức giá hoặc xác minh trước khi gửi thư chính thức.</p>
+        </div>
+      </div>
+    </div>
+    <div class="intro-dialog-footer">
+      <button type="button" class="btn btn-light" data-dialog-close>Đóng</button>
+      <button type="button" class="btn btn-primary" id="btnHitlToWorkspace">✓ Đã hiểu · Vào Không gian làm việc</button>
+    </div>
+  </dialog>
+
+  <!-- MODAL 3: XEM TRƯỚC HỒ SƠ & BẢN NHÁP / KPI DỰ BÁO -->
+  <dialog id="previewDialog" class="intro-dialog" aria-labelledby="previewDialogTitle">
+    <div class="intro-dialog-header">
+      <h2 id="previewDialogTitle">Chi tiết hồ sơ</h2>
+      <button type="button" class="intro-dialog-close" data-dialog-close aria-label="Đóng">✕</button>
+    </div>
+    <div id="previewDialogContent"></div>
+    <div class="intro-dialog-footer">
+      <button type="button" class="btn btn-light" data-dialog-close>Đóng</button>
+      <button type="button" class="btn btn-primary" id="btnPreviewToWorkspace">🚀 Mở trong Không gian làm việc</button>
+    </div>
+  </dialog>
+
+  <dialog id="emailDialog" class="repair-dialog email-dialog" aria-labelledby="emailDialogTitle">
+    <div class="repair-dialog-header"><div><div class="eyebrow">BẢN NHÁP EMAIL</div><h2 id="emailDialogTitle">Xem trước email</h2></div><button type="button" id="closeEmailDialog" class="btn btn-light" aria-label="Đóng email">✕</button></div>
+    <p id="emailContractContext" class="email-contract-context"></p>
+    <div class="email-editor">
+      <label for="emailSubject">Tiêu đề<input id="emailSubject" maxlength="200" autocomplete="off"></label>
+      <label for="emailBody">Nội dung email<textarea id="emailBody" rows="12" spellcheck="false"></textarea></label>
+    </div>
+    <details class="email-rewrite-panel" open><summary>✦ Yêu cầu Agent viết lại</summary>
+      <div class="email-rewrite-options"><label for="emailTone">Giọng văn<select id="emailTone"><option value="formal">Trang trọng</option><option value="friendly">Thân thiện</option></select></label><label for="emailLength">Độ dài<select id="emailLength"><option value="standard">Vừa phải</option><option value="short">Ngắn gọn</option><option value="detailed">Chi tiết</option></select></label><label class="email-price-option"><input id="emailIncludePrice" type="checkbox" checked> Nêu giá trị gia hạn khi có dữ liệu</label></div>
+      <label class="email-instruction-label" for="emailInstruction">Yêu cầu bổ sung<textarea id="emailInstruction" rows="2" maxlength="1000" placeholder="VD: ngắn gọn hơn, thân thiện hơn, không nhắc giá; hoặc Thêm câu: …"></textarea></label>
+      <div class="email-rewrite-actions"><button type="button" id="rewriteEmail" class="btn btn-light">✦ Agent viết lại</button><button type="button" id="undoEmailRewrite" class="btn btn-quiet" disabled>↶ Hoàn tác</button><small>Viết theo mẫu cục bộ và dữ liệu hợp đồng. Bạn có thể chỉnh trực tiếp trước khi sao chép.</small></div>
+    </details>
+    <div class="email-dialog-footer"><p id="emailDialogStatus" role="status" aria-live="polite"></p><button type="button" id="copyEmailDraft" class="btn btn-primary">📋 Sao chép email</button></div>
+  </dialog>
+  <dialog id="inputGuideDialog" class="repair-dialog input-guide-dialog" aria-labelledby="inputGuideTitle"><div class="repair-dialog-header"><div><div class="eyebrow">KIỂM TRA ĐẦU VÀO</div><h2 id="inputGuideTitle">File mẫu & quy tắc dữ liệu</h2></div><button type="button" id="closeInputGuide" class="btn btn-light" aria-label="Đóng hướng dẫn đầu vào">✕</button></div><div id="inputGuideContent"></div><div class="input-guide-footer"><a class="btn btn-primary" href="/templates/mau_du_lieu_gia_han.xlsx" download>↓ Tải file mẫu XLSX</a></div></dialog>
+  <script src="/input-schema.js"></script>
+  <script src="/input-guide.js"></script>
+  <script src="/app.js"></script>
+  <script src="/review.js"></script>
+  <script src="/email.js"></script>
+  <script src="/repair.js"></script>
+  <script src="/charts.js"></script>
+  <script src="/workspace.js"></script>
+  <script src="/intro.js"></script>
+</body>
+</html>
